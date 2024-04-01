@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Slider</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div class="slider h-[100vh] w-[100vw] overflow-hidden">
+        <div class="list">
+         
+            <div class="item1">
+                <img src="\images\img00.png" class="bg-cover" alt="">
+
+                <div class="content">
+                    <div class="title">Handwritten Kanji Recognition</div>
+                    <div class="type">Japanese Basic Nature Kanji Prediction</div>
+                    <div class="description">
+                        You can input Kanji characters in the handwritten box  below to recognize their basic meanings. Try it out &#128516;
+                    </div>
+                </div>
+            </div>            
+
+            <!-- <div class="item2">
+                <img src="\images\img01.png" alt="">
+
+                <div class="content">
+                    <div class="title">MAGIC SLIDER</div>
+                    <div class="type">FLOWER</div>
+                    <div class="description">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti temporibus quis eum consequuntur voluptate quae doloribus distinctio. Possimus, sed recusandae. Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, aut.
+                    </div>
+                </div>
+            </div>
+
+            <div class="item3">
+                <img src="\images\img02.png" alt="">
+
+                <div class="content">
+                    <div class="title">MAGIC SLIDER</div>
+                    <div class="type">NATURE</div>
+                    <div class="description">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti temporibus quis eum consequuntur voluptate quae doloribus distinctio. Possimus, sed recusandae. Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, aut.
+                    </div>
+                </div>
+            </div>
+
+            <div class="item4">
+                <img src="\images\img03.png" alt="">
+
+                <div class="content">
+                    <div class="title">MAGIC SLIDER</div>
+                    <div class="type">PLANT</div>
+                    <div class="description">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti temporibus quis eum consequuntur voluptate quae doloribus distinctio. Possimus, sed recusandae. Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, aut.
+                    </div>
+                </div>
+            </div>
+
+            <div class="item5">
+                <img src="\images\img04.png" alt="">
+
+                <div class="content">
+                    <div class="title">MAGIC SLIDER</div>
+                    <div class="type">NATURE</div>
+                    <div class="description">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti temporibus quis eum consequuntur voluptate quae doloribus distinctio. Possimus, sed recusandae. Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, aut.
+                    </div>
+                </div>
+            </div>
+
+            <div class="item6">
+                <img src="\images\img05.png" alt="">
+
+                <div class="content">
+                    <div class="title">MAGIC SLIDER</div>
+                    <div class="type">NATURE</div>
+                    <div class="description">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti temporibus quis eum consequuntur voluptate quae doloribus distinctio. Possimus, sed recusandae. Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, aut.
+                    </div>
+                </div>
+            </div>       
+
+            <div class="item7">
+                <img src="\images\img00.png" alt="">
+
+                <div class="content">
+                    <div class="title">MAGIC SLIDER</div>
+                    <div class="type">NATURE</div>
+                    <div class="description">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Deleniti temporibus quis eum consequuntur voluptate quae doloribus distinctio. Possimus, sed recusandae. Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, aut.
+                    </div>
+                </div>
+                
+            </div>     
+
+        </div> -->
+
+
+        <div class="thumbnail">
+            <div class="item1">
+                <img src="\images\img07.png" alt="">
+            </div>
+            <div class="predicted_answer p-5">
+                <h2 id="prediction_heading">Prediction</h2>
+                <h1 id="result">-</h1>
+                <p id="confidence">Confidence: -</p>
+            </div>
+
+
+
+            <!-- <div class="item2">
+                <img src="\images\img01.png" alt="">
+            </div>
+            <div class="item3">
+                <img src="\images\img02.png" alt="">
+            </div>
+            <div class="item4">
+                <img src="\images\img03.png" alt="">
+            </div>
+            <div class="item5">
+                <img src="\images\img04.png" alt="">
+            </div>
+            <div class="item6">
+                <img src="\images\img05.png" alt="">
+            </div>
+            <div class="item7">
+                <img src="\images\img06.png" alt="">
+            </div> -->
+
+        </div>
+
+       
+       
+
+        <div class="button">
+            <div>
+                <canvas id="sketchpad" width="200" height="200"></canvas>
+            </div>
+            <button class="pred"> Predict </button>
+            <button class="clear"> Clear </button>
+            <h1 class="text-2xl font-bold underline text-black md:text-3xl">
+                
+              </h1>
+        </div>
+
+
+    </div>
+
+    <script>
+        // Get the canvas element
+        const canvas = document.getElementById('sketchpad');
+        const ctx = canvas.getContext('2d');
+    
+        // Set initial drawing style
+        ctx.lineWidth = 5;
+        ctx.lineCap = 'round';
+        ctx.strokeStyle = 'black';
+    
+        let isDrawing = false;
+        let lastX = 0;
+        let lastY = 0;
+    
+        // Function to draw lines
+        function draw(e) {
+            if (!isDrawing) return;
+    
+            ctx.beginPath();
+            // Start from
+            ctx.moveTo(lastX, lastY);
+            // Go to
+            ctx.lineTo(e.offsetX, e.offsetY);
+            ctx.stroke();
+    
+            [lastX, lastY] = [e.offsetX, e.offsetY];
+        }
+    
+        // Event listeners for mouse movements
+        canvas.addEventListener('mousedown', (e) => {
+            isDrawing = true;
+            [lastX, lastY] = [e.offsetX, e.offsetY];
+        });
+    
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', () => isDrawing = false);
+        canvas.addEventListener('mouseout', () => isDrawing = false);
+    </script>
+    
+
+
+
+    <script src="app.js"></script>
+</body>
+</html>
